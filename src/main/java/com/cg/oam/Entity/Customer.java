@@ -24,13 +24,7 @@ import lombok.NoArgsConstructor;
 public class Customer extends AbstractUser{
 	
 	
-	/*
-	 * public Customer(CustomerBean customerBean) { age=customerBean.getAge();
-	 * gender=customerBean.getGender(); email=customerBean.getEmail();
-	 * phoneNumber=customerBean.getPhoneNumber();
-	 * 
-	 * }
-	 */
+	
 	 
 	
 	@Column(name = "age")
@@ -49,6 +43,17 @@ public class Customer extends AbstractUser{
 	  private List<Prescription> prescriptions;
 	
 	@OneToOne
-	@JoinColumn(name="address_id",nullable=false)
+    @JoinColumn(name="address_id")
 	private Address address;
+	
+	
+	
 }
+
+/*
+ * public Customer(CustomerBean customerBean) { age=customerBean.getAge();
+ * gender=customerBean.getGender(); email=customerBean.getEmail();
+ * phoneNumber=customerBean.getPhoneNumber();
+ * 
+ * }
+ */

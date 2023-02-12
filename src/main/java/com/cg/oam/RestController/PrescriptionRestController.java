@@ -20,4 +20,6 @@ public class PrescriptionRestController {
 	public Prescription addPrescription(@RequestBody PrescriptionBean prescription) {
 		return prescriptionService.addPrescription(prescription);
 	}
+	//need to do more 
+	//upload and downLoad images at time of front ent
 }

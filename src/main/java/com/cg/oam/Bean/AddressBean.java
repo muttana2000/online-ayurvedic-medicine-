@@ -26,9 +26,9 @@ public class AddressBean {
 		city=address.getCity();
 		state=address.getState();
 		pinCode=address.getPinCode();
-		if(buildCustomer) {
-			customerBean = new CustomerBean(address.getCustomer(),false);
-		}
+		//if(buildCustomer) {
+		//	customerBean = new CustomerBean(address.getCustomer(),false);
+		//}
 	}
 
 }

@@ -1,11 +1,12 @@
 package com.cg.oam.Entity;
 
-import jakarta.persistence.CascadeType;
+import com.cg.oam.Bean.AddressBean;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,13 +17,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Address {
-	/*
-	 * public Address(AddressBean addressBean) {
-	 * addressId=addressBean.getAddressId();
-	 * houseNumber=addressBean.getHouseNumber(); street=addressBean.getStreet();
-	 * landmark=addressBean.getLandmark(); city=addressBean.getCity();
-	 * state=addressBean.getState(); pinCode=addressBean.getPinCode(); }
-	 */
+	
+	  public Address(AddressBean addressBean) {
+	  addressId=addressBean.getAddressId();
+	  houseNumber=addressBean.getHouseNumber();
+	  street=addressBean.getStreet();
+	  landmark=addressBean.getLandmark();
+	  city=addressBean.getCity();
+	 state=addressBean.getState(); 
+	 pinCode=addressBean.getPinCode(); 
+	 }
+	 
+	 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "address_id")
@@ -40,7 +46,9 @@ public class Address {
 	@Column(name = "pinCode")
 	private Integer pinCode;
 	
-	@OneToOne(mappedBy = "address",cascade = CascadeType.ALL)
+	
+    @OneToOne
+    @JoinColumn(name="userId")
 	private Customer customer;
 	
 }

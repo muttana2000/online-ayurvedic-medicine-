@@ -7,5 +7,5 @@ import com.cg.oam.Entity.Customer;
 
 
 public interface ICustomerRepository extends JpaRepository<Customer,Integer>{
-    Customer findByUserId(Integer userId);
+    public Customer findByUserId(Integer userId);
 }

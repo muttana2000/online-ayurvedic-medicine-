@@ -8,5 +8,6 @@ import com.cg.oam.Entity.Address;
 
 @Repository
 public interface IAddressRepository extends JpaRepository<Address, Integer>{
-
+   
+	 public Address findByAddressId(Integer addressId);
 }

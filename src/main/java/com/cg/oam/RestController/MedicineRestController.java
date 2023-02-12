@@ -1,5 +1,7 @@
 package com.cg.oam.RestController;
 
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +45,12 @@ public class MedicineRestController {
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/getAllMedicines")
-	public ResponseEntity<List<MedicineBean>> findAllMedicines()
-	{
-		List<MedicineBean> medicines=medicineService.findAllAvailableMedicines();
-		return ResponseEntity.ok(medicines);
-	}
+	//@GetMapping("/getAllMedicines")
+	//public ResponseEntity<List<MedicineBean>> findAllMedicines()
+	//{
+	//	List<MedicineBean> medicines=medicineService.findAllAvailableMedicines();
+	//	return ResponseEntity.ok(medicines);
+	//}
 	
 	@GetMapping("/getmedicinebyid/{medicineid}")
 	public ResponseEntity<MedicineBean> findByMedicineId(@PathVariable("medicineid") int medicineid)
@@ -59,7 +61,7 @@ public class MedicineRestController {
 	
 	@GetMapping("/getByMedicineName/{medicinename}")
 	public ResponseEntity<MedicineBean> findByMedicineName(@PathVariable("medicinename") String medicineName)
-	{
+{
 		MedicineBean medicine=medicineService.findByMedicineName(medicineName);
 		return ResponseEntity.ok(medicine);
 	}
@@ -73,7 +75,7 @@ public class MedicineRestController {
 	
 	@GetMapping("/getMedicinebyCompanyName/{companyname}")
 	public ResponseEntity<List<MedicineBean>> findAllMedicinesByCompany(@PathVariable("companyname") String companyName)
-	{
+{
 		List<MedicineBean> medicines=medicineService.findByCompany(companyName);
 		return ResponseEntity.ok(medicines);
 	}

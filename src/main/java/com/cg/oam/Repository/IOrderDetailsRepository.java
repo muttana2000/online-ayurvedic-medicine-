@@ -1,5 +1,7 @@
 package com.cg.oam.Repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,4 +13,6 @@ public interface IOrderDetailsRepository extends JpaRepository<OrderDetails,Inte
 	//method to find orderDetails By its Id
 	@Query("SELECT o from OrderDetails o where o.orderId=?1")
 	public OrderDetails findByOrderDetailsId(Integer OrderId);
+
+	public List<OrderDetails> findByCustomerUserId(Integer userId);
 }

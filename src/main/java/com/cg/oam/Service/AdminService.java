@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 
 
 import com.cg.oam.Bean.CustomerBean;
+import com.cg.oam.Bean.MedicineBean;
 import com.cg.oam.Bean.OrderDetailsBean;
 import com.cg.oam.Entity.Customer;
-
+import com.cg.oam.Entity.Medicine;
+import com.cg.oam.Entity.OrderDetails;
 import com.cg.oam.Repository.ICustomerRepository;
-import com.cg.oam.exception.EmptyInputException;
+import com.cg.oam.Repository.IMedicineRepository;
+import com.cg.oam.Repository.IOrderDetailsRepository;
 import com.cg.oam.exception.EmptyResultDataAccessException;
-import com.cg.oam.exception.InvalidInputException;
 import com.cg.oam.exception.NoSuchElementException;
 
 import jakarta.transaction.Transactional;
@@ -28,22 +30,28 @@ public class AdminService {
 	
 	@Autowired
 	private ICustomerRepository customerRepository;
+	
+	@Autowired
+	private IMedicineRepository medicineRepository;
+	
+	@Autowired
+	private IOrderDetailsRepository orderRepository;
 
 	// method to get customer by its id
 	public CustomerBean findCustomerById(Integer id) {
 		Optional<Customer> checkcustomer = customerRepository.findById(id);
-	    if (checkcustomer == null) {
+	    if (checkcustomer.isEmpty()) {
 	      throw new NoSuchElementException();
 	    }
 		Customer customer = customerRepository.findById(id).get();
-		return new CustomerBean(customer);
+		return new CustomerBean(customer,true);
 	}
-
+   
 	// method to find all users means all customers also
 	public List<CustomerBean> findAllUsers() {
 		List<CustomerBean> cusList = new ArrayList<>();
 		
-		customerRepository.findAll().forEach(cus -> cusList.add(new CustomerBean(cus)));
+		customerRepository.findAll().forEach(cus -> cusList.add(new CustomerBean(cus,false)));
 		if(cusList.isEmpty()) {
 			throw new EmptyResultDataAccessException();
 		}
@@ -58,9 +66,89 @@ public class AdminService {
 	    }
         Customer customer = customerRepository.findByUserId(userId);
         List<OrderDetailsBean> orderList = new ArrayList<>();
-		customer.getOrders().forEach(order -> orderList.add(new OrderDetailsBean(order)));
+		customer.getOrders().forEach(order -> orderList.add(new OrderDetailsBean(order,true)));
 		return orderList;
     }
+	
+	//Method to find medicine by category
+		
+		public List<MedicineBean> findAllMedicineByCategory(String categoryname) {
+			List<MedicineBean> medicineList = new ArrayList<>();
+			medicineRepository.findAll().forEach(medicine -> {
+				if (medicine.getMedicineCategory().getCategoryName().equals(categoryname)) 
+				{
+					medicineList.add(new MedicineBean(medicine, false));
+				}
+			});
+			if(medicineList.isEmpty()) {
+				throw new EmptyResultDataAccessException();
+			}
+			return medicineList;
+		}
+		
+		//Method to find medicine by id
+		public MedicineBean findMedicineById(Integer medicineId) {
+			Optional<Medicine> checkMedicine = medicineRepository.findById(medicineId);
+		    if (checkMedicine.isEmpty()) {
+		      throw new NoSuchElementException();
+		    }
+			Medicine medicine = medicineRepository.findById(medicineId).get();
+			return new MedicineBean(medicine, false);
+		}
+
+		//Method to update medicine by id
+		public Medicine updateMedicineById(MedicineBean medicine,Integer medicineId) {
+			 Medicine checkMedicine = medicineRepository.findByMedicineId(medicineId);
+			    if (checkMedicine==null) {
+			      throw new NoSuchElementException();
+			    }
+			   
+				checkMedicine.setMedicineName(medicine.getMedicineName());
+				checkMedicine.setCompanyName(medicine.getCompanyName());
+				checkMedicine.setMedicineCost(medicine.getMedicineCost());
+				return medicineRepository.save(checkMedicine);
+		}
+		
+		//method to find all order
+		public List<OrderDetailsBean> findAllOrders() {
+			List<OrderDetailsBean> orderList = new ArrayList<>();
+			List<Customer> customerList = customerRepository.findAll();
+			for (Customer customer : customerList) {
+				customer.getOrders().forEach(order -> orderList.add(new OrderDetailsBean(order, false)));
+			}
+			if (orderList.isEmpty()) {
+				throw new EmptyResultDataAccessException();
+			}
+			return orderList;
+		}
+		
+		//Method to find all order by status
+		public List<OrderDetailsBean> findOrdersByStatus(String status) {
+			List<OrderDetailsBean> orderList = new ArrayList<>();
+			List<Customer> customerList = customerRepository.findAll();
+			for (Customer customer : customerList) {
+				customer.getOrders().stream().filter(order -> order.getStatus().equalsIgnoreCase(status))
+						.forEach(order -> orderList.add(new OrderDetailsBean(order, true)));
+			}
+			if (orderList.isEmpty()) {
+				throw new EmptyResultDataAccessException();
+			}
+			return orderList;
+		}
+		
+		//Method to update order by Id
+				public OrderDetailsBean updateOrderById(Integer orderId,OrderDetailsBean orderDetails) {
+				    Optional<OrderDetails> checkOrder = orderRepository.findById(orderId);
+				    if (checkOrder.isEmpty()) {
+				      throw new NoSuchElementException();
+				    }
+				    OrderDetails order = checkOrder.get();
+				    order.setStatus(orderDetails.getStatus());
+				    order.setOrderDate(orderDetails.getOrderDate());
+				    order.setTotalCost(orderDetails.getTotalCost());
+				    return new OrderDetailsBean(orderRepository.save(order), false);
+				}
+
 	
 	
 	

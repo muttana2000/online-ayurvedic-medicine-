@@ -6,15 +6,15 @@ import com.cg.oam.Bean.MedicineBean;
 import com.cg.oam.Entity.Medicine;
 
 public class MedicineHelper {
-	public static MedicineBean generateMedicineBean(Medicine med) {
-		MedicineBean medicineBean=null;
-		if(med!=null)
-			medicineBean = new MedicineBean(med);
-		if(med.getMedicineCategory()!=null)
-			medicineBean.setCategory(new CategoryBean(med.getMedicineCategory()));;
-		if(med.getDescription()!=null) {
-			medicineBean.setDescription(new DescriptionBean(med.getDescription()));
-		}
-		return medicineBean;
-	}
+	
+	  public static MedicineBean generateMedicineBean(Medicine med) {
+		  MedicineBean medicineBean=null; 
+		  if(med!=null)
+			  medicineBean = new MedicineBean(med,false);
+	  if(med.getMedicineCategory()!=null)
+		  medicineBean.setCategoryBean(new CategoryBean(med.getMedicineCategory(),false)); 
+		  if(med.getDescription()!=null) {
+	  medicineBean.setDescriptionBean(new DescriptionBean(med.getDescription(),false)); }
+	  return medicineBean; }
+	
 }

@@ -2,6 +2,8 @@ package com.cg.oam.Entity;
 
 import java.time.LocalDate;
 
+import com.cg.oam.Bean.MedicineBean;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,25 +23,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Medicine {
-	/*
-	 * public Medicine(MedicineBean medicineBean) {
-	 * medicineId=medicineBean.getMedicineId();
-	 * medicineName=medicineBean.getMedicineName();
-	 * medicineCost=medicineBean.getMedicineCost();
-	 * companyName=medicineBean.getCompanyName();
-	 * manufactureDate=medicineBean.getManufactureDate();
-	 * expiryDate=medicineBean.getExpiryDate(); stock=medicineBean.getStock();
-	 * rating=medicineBean.getRating();
-	 * 
-	 * if(medicineBean.getDescription()!=null) description=new
-	 * Description(medicineBean.getDescription());
-	 * 
-	 * 
-	 * if(medicineBean.getOrder()!=null) order=new
-	 * OrderDetails(medicineBean.getOrder());
-	 * 
-	 * }
-	 */
+	
+	 public Medicine(MedicineBean medicineBean) {
+	  medicineId=medicineBean.getMedicineId();
+	  medicineName=medicineBean.getMedicineName();
+	  medicineCost=medicineBean.getMedicineCost();
+	  companyName=medicineBean.getCompanyName();
+	 manufactureDate=medicineBean.getManufactureDate();
+	  expiryDate=medicineBean.getExpiryDate(); stock=medicineBean.getStock();
+	  rating=medicineBean.getRating();
+	 
+	  if(medicineBean.getDescriptionBean()!=null)
+		  description=new Description(medicineBean.getDescriptionBean());
+	  
+	  
+	  }
+	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "medicine_id", nullable = false)
@@ -74,7 +73,7 @@ public class Medicine {
 	 */
 
 	// unidirectional
-	@OneToOne(mappedBy = "Medicine", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "medicine", cascade = CascadeType.ALL)
 	private Description description;
 
 	/*

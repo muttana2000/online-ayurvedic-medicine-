@@ -30,7 +30,7 @@ public class CustomerTest {
 
 		Customer cust = new Customer();
 		cust.setUsername("shiva@3270");
-		when(service.createUser(any(Customer.class))).thenReturn(cust);
+		when(service.addCustomer(any(Customer.class))).thenReturn(cust);
 						// TODO Auto-generated method stub
 	}																
 
@@ -39,6 +39,6 @@ public class CustomerTest {
 	void testAddCustomer1() {
 		Customer custDto = new Customer();
 		custDto.setUsername("shiva@3270");
-		assertTrue(service.createUser(custDto).equals("shiva@3270"));
+		assertTrue(service.addCustomer(custDto).equals("shiva@3270"));
 	}
 }
