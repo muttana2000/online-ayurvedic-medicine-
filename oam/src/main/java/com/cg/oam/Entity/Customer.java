@@ -1,8 +1,6 @@
-package com.cg.oam.Entity;
+package com.cg.oam.entity;
 
 import java.util.List;
-
-import com.cg.oam.Bean.CustomerBean;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,12 +24,7 @@ import lombok.NoArgsConstructor;
 public class Customer extends AbstractUser{
 	
 	
-	 public Customer(CustomerBean customerBean) {
-	  age=customerBean.getAge(); 
-	  gender=customerBean.getGender();
-	  email=customerBean.getEmail();
-      phoneNumber=customerBean.getPhoneNumber();
-	  address = customerBean.getAddress(); }
+	
 	 
 	
 	@Column(name = "age")
@@ -43,13 +36,25 @@ public class Customer extends AbstractUser{
 	@Column(name = "phone_number")
 	private Long phoneNumber;
 
-	@OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
+	//bi Directional
+	@OneToMany(mappedBy = "customer")
 	private List<OrderDetails> orders;
 	
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	  private List<Prescription> prescriptions;
 	
 	@OneToOne
-	@JoinColumn(name="address_id")
+    @JoinColumn(name="address_id")
 	private Address address;
+	
+	
+	
 }
+
+/*
+ * public Customer(CustomerBean customerBean) { age=customerBean.getAge();
+ * gender=customerBean.getGender(); email=customerBean.getEmail();
+ * phoneNumber=customerBean.getPhoneNumber();
+ * 
+ * }
+ */

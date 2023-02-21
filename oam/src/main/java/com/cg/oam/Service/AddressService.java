@@ -1,15 +1,15 @@
-package com.cg.oam.Service;
+package com.cg.oam.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.cg.oam.Entity.Address;
-import com.cg.oam.Repository.IAddressRepository;
+
+import com.cg.oam.entity.Address;
 import com.cg.oam.exception.EmptyInputException;
 import com.cg.oam.exception.InvalidInputException;
 import com.cg.oam.exception.NoSuchElementException;
+import com.cg.oam.repository.IAddressRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -20,19 +20,13 @@ public class AddressService {
 	@Autowired
 	private IAddressRepository addressRepository;
 
-	@Transactional
-	public List<Address> findAllAddress() {
-		List<Address> adList = addressRepository.findAll();
-		return adList;
-	}
+	
 
 	public Address addAddress(Address adrs) {
-		if (adrs.getLandmark() == null|| adrs.getLandmark().length() == 0 || adrs.getCity() == null
-				|| adrs.getCity().length() == 0) {
+		if (adrs.getLandmark().isEmpty() || adrs.getCity().isEmpty()) {
 			throw new EmptyInputException();
 		}
-		if (adrs.getHouseNumber() == 0 || adrs.getHouseNumber() < 0 || adrs.getPinCode() == 0
-				|| adrs.getPinCode() < 0) {
+		if (adrs.getHouseNumber() < 0 && adrs.getPinCode() < 0) {
 			throw new InvalidInputException();
 		}
 		return addressRepository.save(adrs);
@@ -49,5 +43,11 @@ public class AddressService {
 	public void deleteAddressById(int deptId) {
 		addressRepository.deleteById(deptId);
 	}
+	
+	
+	/*
+	 * @Transactional public List<Address> findAllAddress() { List<Address> adList =
+	 * addressRepository.findAll(); return adList; }
+	 */
 
 }

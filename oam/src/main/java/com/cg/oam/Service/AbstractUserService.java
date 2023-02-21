@@ -1,9 +1,9 @@
-package com.cg.oam.Service;
+package com.cg.oam.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cg.oam.Entity.AbstractUser;
-import com.cg.oam.Repository.IUserRepository;
+import com.cg.oam.entity.AbstractUser;
+import com.cg.oam.repository.IUserRepository;
 
 import jakarta.transaction.Transactional;
 

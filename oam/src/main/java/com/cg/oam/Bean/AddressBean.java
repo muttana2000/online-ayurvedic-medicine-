@@ -1,7 +1,6 @@
-package com.cg.oam.Bean;
+package com.cg.oam.bean;
 
-import com.cg.oam.Entity.Address;
-import com.cg.oam.Entity.Customer;
+import com.cg.oam.entity.Address;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +17,9 @@ public class AddressBean {
 	private String city;
 	private String state;
 	private Integer pinCode;
-	private Customer customer;
+	private CustomerBean customer;
 	
-	public AddressBean(Address address) {
+	public AddressBean(Address address,Boolean buildCustomer) {
 		addressId=address.getAddressId();
 		houseNumber=address.getHouseNumber();
 		street=address.getStreet();
@@ -28,7 +27,9 @@ public class AddressBean {
 		city=address.getCity();
 		state=address.getState();
 		pinCode=address.getPinCode();
-		//customer = address.getCustomer();
+		//if(buildCustomer) {
+		//	customerBean = new CustomerBean(address.getCustomer(),false);
+		//}
 	}
 
 }

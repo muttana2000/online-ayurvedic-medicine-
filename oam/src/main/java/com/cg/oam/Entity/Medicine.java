@@ -1,8 +1,8 @@
-package com.cg.oam.Entity;
+package com.cg.oam.entity;
 
 import java.time.LocalDate;
 
-import com.cg.oam.Bean.MedicineBean;
+import com.cg.oam.bean.MedicineBean;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,28 +23,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Medicine {
-	public Medicine(MedicineBean medicineBean) {
-		medicineId=medicineBean.getMedicineId();
-		medicineName=medicineBean.getMedicineName();
-		medicineCost=medicineBean.getMedicineCost();
-		companyName=medicineBean.getCompanyName();
-		manufactureDate=medicineBean.getManufactureDate();
-		expiryDate=medicineBean.getExpiryDate();
-		stock=medicineBean.getStock();
-		rating=medicineBean.getRating();
-		
-		if(medicineBean.getDescription()!=null)
-			description=new Description(medicineBean.getDescription());
-		
-		/*
-		 * if(medicineBean.getOrder()!=null) order=new
-		 * OrderDetails(medicineBean.getOrder());
-		 */
-	}
+	
+	 public Medicine(MedicineBean medicineBean) {
+	  medicineId=medicineBean.getMedicineId();
+	  medicineName=medicineBean.getMedicineName();
+	  medicineCost=medicineBean.getMedicineCost();
+	  companyName=medicineBean.getCompanyName();
+	 manufactureDate=medicineBean.getManufactureDate();
+	  expiryDate=medicineBean.getExpiryDate(); stock=medicineBean.getStock();
+	  rating=medicineBean.getRating();
+	 
+	  if(medicineBean.getDescription()!=null)
+		  description=new Description(medicineBean.getDescription());
+	  
+	  
+	  }
+	 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "medicine_id", nullable = false)
-	private Integer medicineId; //primary key
+	private Integer medicineId; // primary key
 	@Column(name = "medicine_name", nullable = false)
 	private String medicineName;
 	@Column(name = "medicine_cost")
@@ -57,28 +55,27 @@ public class Medicine {
 	private LocalDate expiryDate;
 	@Column(name = "stock")
 	private Integer stock;
-	
+
 	@Lob
 	private Byte[] medicineImage;
 	@Column(name = "rating")
 	private Integer rating;
-	
-	//Bidirectional
+
+	// Bidirectional
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category medicineCategory;
-	
+
 	/*
 	 * @ManyToOne(cascade = CascadeType.ALL)
 	 * 
 	 * @JoinColumn(name="user_id") private Admin admin;
 	 */
-	
-	//unidirectional
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "description_id")
+
+	// unidirectional
+	@OneToOne(mappedBy = "medicine", cascade = CascadeType.ALL)
 	private Description description;
-	
+
 	/*
 	 * @OneToOne
 	 * 

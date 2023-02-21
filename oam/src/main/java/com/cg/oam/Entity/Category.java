@@ -1,4 +1,4 @@
-package com.cg.oam.Entity;
+package com.cg.oam.entity;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Category {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="category_id")
 	private Integer categoryId;
 	

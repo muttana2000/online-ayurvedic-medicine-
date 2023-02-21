@@ -1,9 +1,10 @@
-package com.cg.oam.Bean;
+package com.cg.oam.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.cg.oam.Entity.Address;
-import com.cg.oam.Entity.Customer;
+import com.cg.oam.entity.Customer;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,11 +23,11 @@ public class CustomerBean{
 	private String lastName;
 	private String username;
 	private String password;
-	private List<OrderDetailsBean> orders;
+	//private List<OrderDetailsBean> orders;
 	private List<PrescriptionBean> prescriptions;
-	private Address address;
+	private AddressBean address;
 	
-	public CustomerBean(Customer customer) {
+	public CustomerBean(Customer customer,Boolean value) {
 		
 		userId = customer.getUserId();
 		age = customer.getAge();
@@ -37,11 +38,18 @@ public class CustomerBean{
 		lastName = customer.getLastName();
 		username = customer.getUsername();
 		password = customer.getPassword();
-		address = customer.getAddress();
-		//orders = new ArrayList<>();
-		//customer.getOrders().stream()
-		//.forEach(order->{orders.add(new OrderDetailsBean(order));
-		//});
+		if(value) {
+			//orders = new ArrayList<>();
+			//customer.getOrders().stream()
+			//.forEach(order->{orders.add(new OrderDetailsBean(order,false));
+			//});
+			prescriptions = new ArrayList<>();
+			customer.getPrescriptions().stream()
+			.forEach(pre->{prescriptions.add(new PrescriptionBean(pre,false,false));
+			});
+			address = new AddressBean(customer.getAddress(),false);
+		}
+		
 		
 		}
 

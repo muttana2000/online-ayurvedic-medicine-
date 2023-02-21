@@ -1,6 +1,7 @@
-package com.cg.oam.Bean;
+package com.cg.oam.bean;
 
-import com.cg.oam.Entity.Description;
+import com.cg.oam.entity.Description;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,17 @@ public class DescriptionBean {
 	private String ingredients;
 	private String quantity;
 	
-	public DescriptionBean(Description description) {
+	private MedicineBean medicine;
+	
+	public DescriptionBean(Description description, Boolean buildMedicine) {
 		descriptionId=description.getDescriptionId();
 		details=description.getDetails();
 		medicineType=description.getMedicineType();
 		ingredients=description.getIngredients();
 		quantity=description.getQuantity();
+		if(buildMedicine) {
+			medicine = new MedicineBean(description.getMedicine(),false);
+		}
 	}
 
 }

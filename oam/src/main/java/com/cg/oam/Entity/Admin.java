@@ -1,4 +1,4 @@
-package com.cg.oam.Entity;
+package com.cg.oam.entity;
 
 import java.util.List;
 
@@ -21,16 +21,18 @@ public class Admin extends AbstractUser{
 	  
 	  //unidirectional
 	  @OneToMany
-	  @JoinColumn(name="medicine_id")
+	  @JoinColumn(name="fk_medicine_id")
 	  private List<Medicine> medicines;
 	  
+	  //unidirectional
 	  @OneToMany
-	  @JoinColumn(name="order_id")
+	  @JoinColumn(name="fk_order_id")
 	  private List<OrderDetails> orders;
 	  
 	  
+	  //unidirectional
 	  @OneToMany
-	  @JoinColumn(name="prescription_id")
+	  @JoinColumn(name="fk_prescription_id")
 	  private List<Prescription> prescriptions;
 	  //unidirectional
 	  //@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)

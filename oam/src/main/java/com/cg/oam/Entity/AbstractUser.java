@@ -1,6 +1,5 @@
-package com.cg.oam.Entity;
+package com.cg.oam.entity;
 
-import com.cg.oam.Bean.AbstractUserBean;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -24,7 +23,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorColumn(name="type")
 public class AbstractUser {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer userId; // primary key
 	
@@ -36,21 +35,16 @@ public class AbstractUser {
 	 private String username;
 	@Column(name = "password")
 	private String password;
-    public AbstractUser(AbstractUserBean abstractUserBean) {
-    	userId = abstractUserBean.getUserId();
-    	firstName = abstractUserBean.getFirstName();
-    	lastName = abstractUserBean.getLastName();
-    	username = abstractUserBean.getUsername();
-    	password = abstractUserBean.getPassword();
-    	
-    	}
+//    public AbstractUser(AbstractUserBean abstractUserBean) {
+//    	userId = abstractUserBean.getUserId();
+//    	firstName = abstractUserBean.getFirstName();
+//    	lastName = abstractUserBean.getLastName();
+//    	username = abstractUserBean.getUsername();
+//    	password = abstractUserBean.getPassword();
+//    	
+//    	}
 	
-	
-	//@OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
-	//private List<OrderDetails> orders;
-	
-	//@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	//private List<Prescription> prescriptions;
+
 	
 	
 	

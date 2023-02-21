@@ -1,8 +1,8 @@
-package com.cg.oam.Bean;
+package com.cg.oam.bean;
 
 import java.util.List;
 
-import com.cg.oam.Entity.AbstractUser;
+import com.cg.oam.entity.AbstractUser;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

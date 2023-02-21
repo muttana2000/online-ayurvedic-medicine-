@@ -1,4 +1,4 @@
-package com.cg.oam.RestController;
+package com.cg.oam.restcontroller;
 
 import java.util.List;
 
@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.oam.Bean.CustomerBean;
-import com.cg.oam.Entity.Address;
-import com.cg.oam.Entity.Customer;
-import com.cg.oam.Entity.OrderDetails;
-import com.cg.oam.Service.AddressService;
-import com.cg.oam.Service.CustomerService;
+import com.cg.oam.bean.AddressBean;
+import com.cg.oam.bean.CustomerBean;
+import com.cg.oam.bean.OrderDetailsBean;
+import com.cg.oam.entity.Address;
+import com.cg.oam.entity.Customer;
+import com.cg.oam.service.AddressService;
+import com.cg.oam.service.CustomerService;
+import com.cg.oam.service.OrderService;
 
 @RestController
 @RequestMapping("/customer")
@@ -29,34 +31,61 @@ public class CustomerRestController {
 	private AddressService addressService;
 	@Autowired
 	private final CustomerService customerService;
+	@Autowired
+	private OrderService orderService;
 
 	public CustomerRestController(CustomerService customerBeanService) {
 		this.customerService = customerBeanService;
 	}
-	@GetMapping("/register")
-	public ResponseEntity<String> addCustomer(@RequestBody Customer customer)
-	{
-		customerService.createUser(customer);
-		return ResponseEntity.ok("Thank you for registering");
+
+	@PostMapping("/register")
+	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+		Customer cust = customerService.addCustomer(customer);
+		return ResponseEntity.ok(cust);
 	}
 
-	@GetMapping("/customers/{userId}")
+	@PostMapping("/{userId}/addAddress")
+	public ResponseEntity<Address> addAddressByCustomerId(@RequestBody AddressBean address, Integer userId) {
+		Address addrs = customerService.addAddressByCustomerId(address, userId);
+		return ResponseEntity.ok(addrs);
+	}
+
+	// GET mapping for finding a customer by their userId
+	@GetMapping("/{userId}")
 	public ResponseEntity<CustomerBean> findById(@PathVariable Integer userId) {
 		CustomerBean customer = customerService.findById(userId);
 		return ResponseEntity.ok(customer);
 	}
+	
+	
+	
 
-	@GetMapping("/customers/{userId}/orders")
-	public ResponseEntity<List<OrderDetails>> findOrdersByUserId(@PathVariable Integer userId) {
-		List<OrderDetails> orders = customerService.findOrdersByUserId(userId);
-		return ResponseEntity.ok(orders);
+	// Put mapping for updating existing customer
+	@PutMapping("/updateCustomer/{userId}")
+	public ResponseEntity<Customer> updateCustomerByUserId(@RequestBody CustomerBean customerBean,
+			@PathVariable Integer userId) {
+		Customer customer = customerService.updateCustomer(customerBean, userId);
+		return ResponseEntity.ok(customer);
+
 	}
 
-	@GetMapping("/getAllAddress")
-	public ResponseEntity<List<Address>> findAllAddressBeans() {
-		List<Address> addressBeans = addressService.findAllAddress();
-		return ResponseEntity.ok(addressBeans);
+	// find all orders of customer by customerID
+	@GetMapping("/orders/{userId}")
+	public ResponseEntity<List<OrderDetailsBean>> getOrdersByUserId(@PathVariable Integer userId) {
+		List<OrderDetailsBean> orderList = orderService.getOrdersByUserId(userId);
+		if (orderList.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(orderList, HttpStatus.OK);
 	}
+
+	@PutMapping("/orders/{userId}/{orderId}")
+	public ResponseEntity<OrderDetailsBean> cancelOrder(@PathVariable Integer userId, @PathVariable Integer orderId) {
+		OrderDetailsBean cancelledOrder = orderService.cancelOrder(userId, orderId);
+		return new ResponseEntity<>(cancelledOrder, HttpStatus.OK);
+	}
+
+	// need to write Upload Prescription at the time of front end
 
 	@PostMapping("/addAddress")
 	public ResponseEntity<String> addAddress(@RequestBody Address address) {

@@ -1,9 +1,9 @@
-package com.cg.oam.Bean;
+package com.cg.oam.bean;
 
 import java.time.LocalDate;
 
+import com.cg.oam.entity.Medicine;
 
-import com.cg.oam.Entity.Medicine;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +22,9 @@ public class MedicineBean {
 	private Integer rating;
 	private DescriptionBean description;
 	private CategoryBean category;
-	//private OrderDetailsBean order;
 	
-	public MedicineBean(Medicine medicine) {
+	
+	public MedicineBean(Medicine medicine,Boolean buildCategoryDescription) {
 		medicineId=medicine.getMedicineId();
 		medicineName=medicine.getMedicineName();
 		medicineCost=medicine.getMedicineCost();
@@ -33,6 +33,10 @@ public class MedicineBean {
 		expiryDate=medicine.getExpiryDate();
 		stock=medicine.getStock();
 		rating=medicine.getRating();
+		if(buildCategoryDescription) {
+			category = new CategoryBean(medicine.getMedicineCategory(),false);
+			description = new DescriptionBean(medicine.getDescription(),false);
+		}
 	}
 
 

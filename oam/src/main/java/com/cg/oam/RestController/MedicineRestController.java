@@ -1,10 +1,13 @@
-package com.cg.oam.RestController;
+package com.cg.oam.restcontroller;
+
+
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,13 +17,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.oam.Bean.MedicineBean;
-import com.cg.oam.Service.MedicineService;
+import com.cg.oam.bean.MedicineBean;
+import com.cg.oam.service.MedicineService;
+
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 @RequestMapping("/medicine")
 public class MedicineRestController {
 	@Autowired
 	private MedicineService medicineService;
+	
+	@GetMapping("/allMedicines")
+	public ResponseEntity<List<MedicineBean>> getAllMedicines(){
+		List<MedicineBean> medBeans = medicineService.getAllMedicines();
+		return ResponseEntity.ok(medBeans);
+	}
 	
 	@PostMapping("/addMedicine")
 	public ResponseEntity<String> addMedicine(@RequestBody MedicineBean med)
@@ -43,12 +54,12 @@ public class MedicineRestController {
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/getAllMedicines")
-	public ResponseEntity<List<MedicineBean>> findAllMedicines()
-	{
-		List<MedicineBean> medicines=medicineService.findAllAvailableMedicines();
-		return ResponseEntity.ok(medicines);
-	}
+	//@GetMapping("/getAllMedicines")
+	//public ResponseEntity<List<MedicineBean>> findAllMedicines()
+	//{
+	//	List<MedicineBean> medicines=medicineService.findAllAvailableMedicines();
+	//	return ResponseEntity.ok(medicines);
+	//}
 	
 	@GetMapping("/getmedicinebyid/{medicineid}")
 	public ResponseEntity<MedicineBean> findByMedicineId(@PathVariable("medicineid") int medicineid)
@@ -59,7 +70,7 @@ public class MedicineRestController {
 	
 	@GetMapping("/getByMedicineName/{medicinename}")
 	public ResponseEntity<MedicineBean> findByMedicineName(@PathVariable("medicinename") String medicineName)
-	{
+{
 		MedicineBean medicine=medicineService.findByMedicineName(medicineName);
 		return ResponseEntity.ok(medicine);
 	}
@@ -73,7 +84,7 @@ public class MedicineRestController {
 	
 	@GetMapping("/getMedicinebyCompanyName/{companyname}")
 	public ResponseEntity<List<MedicineBean>> findAllMedicinesByCompany(@PathVariable("companyname") String companyName)
-	{
+{
 		List<MedicineBean> medicines=medicineService.findByCompany(companyName);
 		return ResponseEntity.ok(medicines);
 	}

@@ -1,12 +1,14 @@
-package com.cg.oam.Entity;
+package com.cg.oam.entity;
 
-import com.cg.oam.Bean.DescriptionBean;
+import com.cg.oam.bean.DescriptionBean;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +27,7 @@ public class Description {
 		
 	}
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "description_id", nullable = false)
 	private Integer descriptionId; //primary and not null
 	
@@ -37,5 +39,9 @@ public class Description {
 	private String ingredients;
 	@Column(name = "quantity")
 	private String quantity;
+	
+	@OneToOne
+	@JoinColumn(name="medicine_id")
+	private Medicine medicine;
 
 }

@@ -1,10 +1,10 @@
-package com.cg.oam.Entity;
+package com.cg.oam.entity;
 
 
 import java.time.LocalDate;
 import java.util.List;
 
-import com.cg.oam.Bean.PrescriptionBean;
+import com.cg.oam.bean.PrescriptionBean;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,8 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,13 +33,13 @@ public class Prescription {
 				
 	}
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "prescription_id", nullable = false)
 	private Integer prescriptionId;
-	@Temporal(TemporalType.DATE)
+	
 	@Column(name = "upload_date")
 	private LocalDate uploadDate;
-	@Temporal(TemporalType.DATE)
+
 	@Column(name = "validation_date")
 	private LocalDate validationDate;
 	
