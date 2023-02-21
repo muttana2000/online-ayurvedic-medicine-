@@ -8,6 +8,7 @@ public class OamApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OamApplication.class, args);
+		System.out.println("Hey boss");
 	}
 
 }
