@@ -17,7 +17,7 @@ public interface IMedicineRepository extends JpaRepository<Medicine,Integer>{
 		public Medicine findByMedicineName(String medicineName);
 		
 		//method to find all medicines of a specific category
-		@Query("SELECT m FROM Medicine m WHERE m.medicineCategory = ?1")
+		@Query("SELECT m FROM Medicine m WHERE m.category = ?1")
 		public List<Medicine> findAllMedicinesByCategory(String categoryName);
 		
 		//method to find all medicines of a specific company

@@ -23,7 +23,7 @@ public class CategoryBean{
 	categoryName=category.getCategoryName();
 	if(buildMedicine) {
 		medicines = new ArrayList<>();
-		category.getMedicines().stream().forEach(c->{medicines.add(new MedicineBean(c,false));
+		category.getMedicines().stream().forEach(c->{medicines.add(new MedicineBean(c,true,false));
 		});
 	}
 		

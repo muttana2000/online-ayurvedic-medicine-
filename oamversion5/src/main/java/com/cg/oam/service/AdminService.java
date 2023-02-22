@@ -67,9 +67,9 @@ public class AdminService {
 		public List<MedicineBean> findAllMedicineByCategory(String categoryname) {
 			List<MedicineBean> medicineList = new ArrayList<>();
 			medicineRepository.findAll().forEach(medicine -> {
-				if (medicine.getMedicineCategory().getCategoryName().equals(categoryname)) 
+				if (medicine.getCategory().getCategoryName().equals(categoryname)) 
 				{
-					medicineList.add(new MedicineBean(medicine, false));
+					medicineList.add(new MedicineBean(medicine, true,false));
 				}
 			});
 			if(medicineList.isEmpty()) {
@@ -85,7 +85,7 @@ public class AdminService {
 		      throw new NoSuchElementException();
 		    }
 			Medicine medicine = medicineRepository.findById(medicineId).get();
-			return new MedicineBean(medicine, false);
+			return new MedicineBean(medicine,true, false);
 		}
 
 		//Method to update medicine by id

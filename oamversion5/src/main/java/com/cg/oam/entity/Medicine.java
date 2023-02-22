@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.cg.oam.bean.MedicineBean;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -64,7 +63,7 @@ public class Medicine {
 	// Bidirectional
 	@ManyToOne
 	@JoinColumn(name = "category_id")
-	private Category medicineCategory;
+	private Category category;
 
 	/*
 	 * @ManyToOne(cascade = CascadeType.ALL)
@@ -73,7 +72,8 @@ public class Medicine {
 	 */
 
 	// unidirectional
-	@OneToOne(mappedBy = "medicine", cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name="description_id")
 	private Description description;
 
 	/*

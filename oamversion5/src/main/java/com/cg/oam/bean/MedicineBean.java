@@ -24,7 +24,7 @@ public class MedicineBean {
 	private CategoryBean category;
 	
 	
-	public MedicineBean(Medicine medicine,Boolean buildCategoryDescription) {
+	public MedicineBean(Medicine medicine,Boolean buildDescription , Boolean buildCategory) {
 		medicineId=medicine.getMedicineId();
 		medicineName=medicine.getMedicineName();
 		medicineCost=medicine.getMedicineCost();
@@ -33,9 +33,12 @@ public class MedicineBean {
 		expiryDate=medicine.getExpiryDate();
 		stock=medicine.getStock();
 		rating=medicine.getRating();
-		if(buildCategoryDescription) {
-			category = new CategoryBean(medicine.getMedicineCategory(),false);
+		if(buildCategory) {
+			
 			description = new DescriptionBean(medicine.getDescription(),false);
+		}
+		if(buildCategory) {
+			category = new CategoryBean(medicine.getCategory(),false);
 		}
 	}
 

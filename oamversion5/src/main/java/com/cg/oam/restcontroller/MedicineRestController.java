@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.oam.bean.MedicineBean;
+import com.cg.oam.entity.Medicine;
 import com.cg.oam.service.MedicineService;
 
 @CrossOrigin(origins="http://localhost:3000")
@@ -34,7 +35,7 @@ public class MedicineRestController {
 	}
 	
 	@PostMapping("/addMedicine")
-	public ResponseEntity<String> addMedicine(@RequestBody MedicineBean med)
+	public ResponseEntity<String> addMedicine(@RequestBody Medicine med)
 	{
 		medicineService.createMedicine(med);
 		return ResponseEntity.ok("Medicine Saved");

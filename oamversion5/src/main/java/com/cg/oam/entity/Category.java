@@ -27,7 +27,7 @@ public class Category {
 	private String categoryName;
 	
 	//bidirectional one-to-Many
-	@OneToMany(mappedBy = "medicineCategory" , cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "category" , cascade = CascadeType.ALL)
 	private List<Medicine> medicines;
 
 }

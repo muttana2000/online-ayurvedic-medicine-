@@ -75,7 +75,6 @@ public class PrescriptionService {
 			prescriptionBeans.add(new PrescriptionBean(prescription, true, true));
 		}
 		return prescriptionBeans;
-		// Helloo boss
 	}
 
 	// upload Prescription

@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,8 +39,7 @@ public class Description {
 	@Column(name = "quantity")
 	private String quantity;
 	
-	@OneToOne
-	@JoinColumn(name="medicine_id")
+	@OneToOne(mappedBy = "description")
 	private Medicine medicine;
 
 }

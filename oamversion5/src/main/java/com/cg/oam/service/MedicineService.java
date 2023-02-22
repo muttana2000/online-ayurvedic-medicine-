@@ -14,6 +14,7 @@ import com.cg.oam.exception.EmptyResultDataAccessException;
 import com.cg.oam.exception.InvalidInputException;
 import com.cg.oam.exception.NoSuchElementException;
 import com.cg.oam.helper.MedicineHelper;
+import com.cg.oam.repository.ICategoryRepository;
 import com.cg.oam.repository.IDescriptionRepository;
 import com.cg.oam.repository.IMedicineRepository;
 
@@ -28,13 +29,16 @@ public class MedicineService {
 	
 	@Autowired
 	private IDescriptionRepository descriptionRepository;
+	
+	@Autowired
+	private ICategoryRepository categoryRepository;
 	// here we are giving basic CRUD operations
 	// Business logic and main functionalities also
 
 	// method to create Medicine product
 	// Admin can add and create medicine
 	@Transactional
-	public Medicine createMedicine(MedicineBean medicine) {
+	public Medicine createMedicine(Medicine medicine) {
 		if (medicine.getMedicineName() == null || medicine.getMedicineName().length() == 0
 				|| medicine.getCompanyName() == null || medicine.getCompanyName().length() == 0) {
 			throw new EmptyInputException();
@@ -43,15 +47,15 @@ public class MedicineService {
 				|| medicine.getRating() < 0) {
 			throw new InvalidInputException();
 		}
-		if (medicine.getManufactureDate().getYear() < 1 || medicine.getManufactureDate().getMonthValue() < 1
-				|| medicine.getManufactureDate().getMonthValue() > 12
-				|| medicine.getManufactureDate().getDayOfMonth() < 1
-				|| medicine.getManufactureDate().getDayOfMonth() > 31) {
-			throw new IllegalArgumentException("Invalid date");
-		}
-		Medicine med = new Medicine(medicine);
-        descriptionRepository.save(med.getDescription());
-		return medicineRepository.save(med);
+//		if (medicine.getManufactureDate().getYear() < 1 || medicine.getManufactureDate().getMonthValue() < 1
+//				|| medicine.getManufactureDate().getMonthValue() > 12
+//				|| medicine.getManufactureDate().getDayOfMonth() < 1
+//				|| medicine.getManufactureDate().getDayOfMonth() > 31) {
+//			throw new IllegalArgumentException("Invalid date");
+//		}
+        descriptionRepository.save(medicine.getDescription());
+        categoryRepository.save(medicine.getCategory());
+		return medicineRepository.save(medicine);
 	}
 
 	// method to update medicine details
@@ -74,12 +78,13 @@ public class MedicineService {
 	// read the medicine by Id
 	@Transactional
 	 public MedicineBean getMedicineById(int id) {
-	 MedicineBean medicineBean =
-	 MedicineHelper.generateMedicineBean(medicineRepository.findByMedicineId(id));
-	 if (medicineBean == null) {
-	 throw new NoSuchElementException();
- }
-	 return MedicineHelper.generateMedicineBean(medicineRepository.findByMedicineId(id));
+	 Optional<Medicine> optionalMedicine = medicineRepository.findById(id);
+	 if(optionalMedicine.isEmpty()) {
+		 throw new NoSuchElementException();
+	 }
+	 Medicine medicine = medicineRepository.findByMedicineId(id);
+	 MedicineBean bean = new MedicineBean(medicine,true,true);
+	 return bean;
 	 }
 	// all medicines
 	
@@ -87,7 +92,7 @@ public class MedicineService {
 	 medicines= medicineRepository.findAll();
 	  
 	  List<MedicineBean> beanMedList = new ArrayList<>();
-	  medicines.stream().forEach(med->beanMedList.add(new MedicineBean(med,false)));
+	  medicines.stream().forEach(med->beanMedList.add(new MedicineBean(med,true,false)));
 	  if(beanMedList.isEmpty()) { throw new
 	  EmptyResultDataAccessException(); }
 	  return beanMedList; 
@@ -124,7 +129,7 @@ public class MedicineService {
 			throw new EmptyResultDataAccessException();
 		}
 		List<MedicineBean> medBeanList = new ArrayList<>();
-		medList.stream().forEach(med -> medBeanList.add(new MedicineBean(med, false)));
+		medList.stream().forEach(med -> medBeanList.add(new MedicineBean(med,true, false)));
 		return medBeanList;
 	}
 
