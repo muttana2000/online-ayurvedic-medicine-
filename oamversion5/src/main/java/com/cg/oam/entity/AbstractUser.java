@@ -35,6 +35,9 @@ public class AbstractUser {
 	 private String username;
 	@Column(name = "password")
 	private String password;
+	
+	@Column(name="role")
+	private String role;
 //    public AbstractUser(AbstractUserBean abstractUserBean) {
 //    	userId = abstractUserBean.getUserId();
 //    	firstName = abstractUserBean.getFirstName();
