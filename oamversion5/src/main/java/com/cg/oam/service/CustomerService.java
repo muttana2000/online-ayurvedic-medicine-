@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.oam.bean.AddressBean;
 import com.cg.oam.bean.CustomerBean;
 import com.cg.oam.entity.Address;
 import com.cg.oam.entity.Customer;
@@ -51,12 +50,11 @@ public class CustomerService {
 
 	// adding address to customer by customer Id
 	@Transactional
-	public Address addAddressByCustomerId(AddressBean addressBean, Integer customerId) {
+	public Address addAddressByCustomerId(Address address, Integer customerId) {
 		Customer customer = customerRepository.findByUserId(customerId);
 		if (customer == null) {
 			throw new NoSuchElementException();
 		}
-		Address address = new Address(addressBean);
 		address.setCustomer(customer);
 
 		return addressRepository.save(address);
@@ -80,22 +78,21 @@ public class CustomerService {
     
 	//update customer by customer Id
 	@Transactional
-	public Customer updateCustomer(CustomerBean customerBean, Integer userId) {
-		Optional<Customer> checkcustomer = customerRepository.findById(userId);
-		if (checkcustomer.isEmpty()) {
-			throw new NoSuchElementException();
+	public Customer updateCustomer(Customer customer) {
+		if (customer.getFirstName().isEmpty() || customer.getLastName().isEmpty()
+				|| customer.getGender().isEmpty()
+				|| customer.getEmail().isEmpty()) {
+			// if any of the required fields are empty
+			throw new EmptyInputException();
 		}
-		Customer customer = customerRepository.findByUserId(userId);
-		customer.setFirstName(customerBean.getFirstName());
-		customer.setLastName(customerBean.getLastName());
-		customer.setAge(customerBean.getAge());
-		customer.setEmail(customerBean.getEmail());
-		customer.setGender(customerBean.getGender());
-		customer.setPhoneNumber(customerBean.getPhoneNumber());
+		// Check if the age and phone number are valid
+		if (customer.getAge() < 0 || customer.getPhoneNumber() < 0) {
+			throw new InvalidInputException();
+		}
 		//Address address = addressRepository.findByAddressId(customer.getAddress().getAddressId());
 		//customer.setAddress(address);
-		customerRepository.save(customer);
-		return customer;
+		addressRepository.save(customer.getAddress());
+		return customerRepository.save(customer);
 	}
 	
 	

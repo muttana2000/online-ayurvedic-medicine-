@@ -2,6 +2,8 @@ package com.cg.oam.entity;
 
 import java.util.List;
 
+import com.cg.oam.bean.CategoryBean;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,6 +20,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Category {
+	
+	public Category(CategoryBean categoryBean) {
+		categoryId = categoryBean.getCategoryId();
+		categoryName = categoryBean.getCategoryName();
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="category_id")

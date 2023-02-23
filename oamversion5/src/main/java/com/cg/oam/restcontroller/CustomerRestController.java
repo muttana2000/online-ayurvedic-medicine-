@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.oam.bean.AddressBean;
 import com.cg.oam.bean.CustomerBean;
 import com.cg.oam.bean.OrderDetailsBean;
 import com.cg.oam.entity.Address;
@@ -45,7 +44,7 @@ public class CustomerRestController {
 	}
 
 	@PostMapping("/{userId}/addAddress")
-	public ResponseEntity<Address> addAddressByCustomerId(@RequestBody AddressBean address, Integer userId) {
+	public ResponseEntity<Address> addAddressByCustomerId(@RequestBody Address address, Integer userId) {
 		Address addrs = customerService.addAddressByCustomerId(address, userId);
 		return ResponseEntity.ok(addrs);
 	}
@@ -61,11 +60,10 @@ public class CustomerRestController {
 	
 
 	// Put mapping for updating existing customer
-	@PutMapping("/updateCustomer/{userId}")
-	public ResponseEntity<Customer> updateCustomerByUserId(@RequestBody CustomerBean customerBean,
-			@PathVariable Integer userId) {
-		Customer customer = customerService.updateCustomer(customerBean, userId);
-		return ResponseEntity.ok(customer);
+	@PutMapping("/updateCustomer")
+	public ResponseEntity<Customer> updateCustomerByUserId(@RequestBody Customer customer) {
+		Customer customernew = customerService.updateCustomer(customer);
+		return ResponseEntity.ok(customernew);
 
 	}
 

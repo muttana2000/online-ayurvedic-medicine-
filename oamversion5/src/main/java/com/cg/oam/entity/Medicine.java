@@ -35,8 +35,10 @@ public class Medicine {
 	  if(medicineBean.getDescription()!=null)
 		  description=new Description(medicineBean.getDescription());
 	  
-	  
+	  if(medicineBean.getCategory()!=null)
+		  category = new Category(medicineBean.getCategory());
 	  }
+	 
 	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
