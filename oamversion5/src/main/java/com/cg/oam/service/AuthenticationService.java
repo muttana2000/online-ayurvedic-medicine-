@@ -1,11 +1,9 @@
 package com.cg.oam.service;
 
-
-
-import com.cg.oam.bean.CustomerBean;
+import com.cg.oam.bean.AbstractUserBean;
 
 public interface AuthenticationService {
 	
-	public CustomerBean login(String username,String password);
+	public AbstractUserBean login(String username,String password);
 
 }

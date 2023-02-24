@@ -25,7 +25,7 @@ public class DescriptionBean {
 		ingredients=description.getIngredients();
 		quantity=description.getQuantity();
 		if(buildMedicine) {
-			medicine = new MedicineBean(description.getMedicine(),true,false);
+			medicine = new MedicineBean(description.getMedicine(),false,false);
 		}
 	}
 

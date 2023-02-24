@@ -43,8 +43,8 @@ public class OrderDetailsBean {
   delieveryDate=orderDetails.getDelieveryDate();
   totalCost=orderDetails.getTotalCost(); 
   medicine = orderDetails.getMedicine(); 
-  if(value) { customer = new
-  CustomerBean(orderDetails.getCustomer(),false); 
+  if(value) { 
+	  customer = new CustomerBean(orderDetails.getCustomer(),false); 
   prescription = new PrescriptionBean(orderDetails.getPrescription(),false,false); } }
 
 }

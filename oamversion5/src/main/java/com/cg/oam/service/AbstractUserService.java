@@ -1,8 +1,13 @@
 package com.cg.oam.service;
 
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cg.oam.bean.AbstractUserBean;
 import com.cg.oam.entity.AbstractUser;
+import com.cg.oam.exception.NoUserFoundException;
 import com.cg.oam.repository.IUserRepository;
 
 import jakarta.transaction.Transactional;
@@ -13,12 +18,12 @@ public class AbstractUserService {
 
 	//login service
 	@Transactional
-		public AbstractUser login(String username) {
-			AbstractUser user = iUserRepository.findByUsername(username);
-			if (user != null) {
-				return user;
-			} else {
-				throw new IllegalArgumentException("Invalid username");
+		public AbstractUserBean login(String username) {
+			Optional<AbstractUser> user = iUserRepository.findByUsername(username);
+			if (user.isEmpty()) {
+				throw new NoUserFoundException();
 			}
+			AbstractUserBean abstractUserBean = new AbstractUserBean(user.get());
+			return abstractUserBean;
 		}
 }
