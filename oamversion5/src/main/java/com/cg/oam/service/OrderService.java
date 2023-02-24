@@ -70,7 +70,7 @@ public class OrderService {
 	
 	// adding
 	@Transactional
-	public OrderDetails addOrder(OrderDetails orderDetails) {
+	public OrderDetailsBean addOrder(OrderDetails orderDetails) {
 		if (orderDetails.getNoOfItems() <= 0) {
 			throw new InvalidInputException();
 		}
@@ -96,7 +96,9 @@ public class OrderService {
 		orderDetails.setTotalCost(totalCost);
 		List<OrderDetails> orders = optionalCustomer.get().getOrders();
         orders.add(orderDetails);
-        return orderRepository.save(orderDetails);
+        orderRepository.save(orderDetails);
+        OrderDetailsBean bean = new OrderDetailsBean(orderDetails,true);
+        return bean;
 		//OrderDetails postOrderDetails = orderRepository.save(orderDetails);
 		//OrderDetailsBean bean = new OrderDetailsBean(postOrderDetails, true);
 		//return bean;
