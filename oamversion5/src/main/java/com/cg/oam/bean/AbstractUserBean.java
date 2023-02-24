@@ -17,6 +17,8 @@ public class AbstractUserBean {
 	private String lastName;
 	private String username;
 	private String password;
+	private String role;
+	
 	private List<OrderDetailsBean> orders;
 	private List<PrescriptionBean> prescriptions;
 	public AbstractUserBean(AbstractUser abstractUser) {
@@ -25,5 +27,7 @@ public class AbstractUserBean {
 		lastName=abstractUser.getLastName();
 		username=abstractUser.getUsername();
 		password=abstractUser.getPassword();
+		role = abstractUser.getRole();
+		
 	}
 }

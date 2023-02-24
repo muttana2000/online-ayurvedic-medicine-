@@ -23,6 +23,7 @@ public class CustomerBean{
 	private String lastName;
 	private String username;
 	private String password;
+	private String role;
 	//private List<OrderDetailsBean> orders;
 	private List<PrescriptionBean> prescriptions;
 	private AddressBean address;
@@ -38,6 +39,7 @@ public class CustomerBean{
 		lastName = customer.getLastName();
 		username = customer.getUsername();
 		password = customer.getPassword();
+		role = customer.getRole();
 		if(value) {
 			//orders = new ArrayList<>();
 			//customer.getOrders().stream()

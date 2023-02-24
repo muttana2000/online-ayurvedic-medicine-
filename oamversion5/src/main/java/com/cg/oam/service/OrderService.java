@@ -42,7 +42,7 @@ public class OrderService {
 		List<OrderDetailsBean> newOrders = new ArrayList<>();	
 		orderRepository.findAll().stream().forEach(order->{
 			if(order.getCustomer().getUserId()==userId) {
-				newOrders.add(new OrderDetailsBean(order, true));
+				newOrders.add(new OrderDetailsBean(order, false));
 			}
 		});
 			
@@ -70,7 +70,7 @@ public class OrderService {
 	
 	// adding
 	@Transactional
-	public OrderDetails addOrder(OrderDetails orderDetails) {
+	public OrderDetailsBean addOrder(OrderDetails orderDetails) {
 		if (orderDetails.getNoOfItems() <= 0) {
 			throw new InvalidInputException();
 		}
@@ -96,7 +96,9 @@ public class OrderService {
 		orderDetails.setTotalCost(totalCost);
 		List<OrderDetails> orders = optionalCustomer.get().getOrders();
         orders.add(orderDetails);
-        return orderRepository.save(orderDetails);
+        orderRepository.save(orderDetails);
+        OrderDetailsBean bean = new OrderDetailsBean(orderDetails,true);
+        return bean;
 		//OrderDetails postOrderDetails = orderRepository.save(orderDetails);
 		//OrderDetailsBean bean = new OrderDetailsBean(postOrderDetails, true);
 		//return bean;
@@ -118,7 +120,7 @@ public class OrderService {
 		public List<OrderDetailsBean> getAllOrders(){
 			List<OrderDetailsBean> orders = new ArrayList<>(); 
 			orderRepository.findAll().stream().forEach(order->{
-				orders.add(new OrderDetailsBean(order, true));
+				orders.add(new OrderDetailsBean(order,false));
 			});
 			return orders;
 		}

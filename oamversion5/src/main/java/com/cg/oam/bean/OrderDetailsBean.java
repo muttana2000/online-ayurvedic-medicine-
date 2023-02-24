@@ -3,7 +3,6 @@ package com.cg.oam.bean;
 
 import java.time.LocalDate;
 
-import com.cg.oam.entity.Medicine;
 import com.cg.oam.entity.OrderDetails;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +29,7 @@ public class OrderDetailsBean {
  
   private CustomerBean customer;
   
-  private Medicine medicine;
+  private MedicineBean medicine;
   
   private PrescriptionBean prescription;
  
@@ -42,9 +41,10 @@ public class OrderDetailsBean {
   orderDate=orderDetails.getOrderDate();
   delieveryDate=orderDetails.getDelieveryDate();
   totalCost=orderDetails.getTotalCost(); 
-  medicine = orderDetails.getMedicine(); 
-  if(value) { customer = new
-  CustomerBean(orderDetails.getCustomer(),false); 
+  
+  if(value) { 
+	  medicine = new MedicineBean(orderDetails.getMedicine(),false,false);
+	  customer = new CustomerBean(orderDetails.getCustomer(),false); 
   prescription = new PrescriptionBean(orderDetails.getPrescription(),false,false); } }
 
 }

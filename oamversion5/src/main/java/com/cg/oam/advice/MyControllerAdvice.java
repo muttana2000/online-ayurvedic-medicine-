@@ -13,43 +13,59 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.cg.oam.exception.AuthenticationFailureException;
 import com.cg.oam.exception.EmptyInputException;
 import com.cg.oam.exception.InvalidInputException;
+import com.cg.oam.exception.NoUserFoundException;
 
 @ControllerAdvice
 public class MyControllerAdvice extends ResponseEntityExceptionHandler {
-	
+
 	@ExceptionHandler(NoSuchElementException.class)
-	public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException elementException)
-	{
-		return new  ResponseEntity<String>("No such value is present in DB, Please change your request",HttpStatus.BAD_REQUEST);
+	public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException elementException) {
+		return new ResponseEntity<String>("No such value is present in DB, Please change your request",
+				HttpStatus.BAD_REQUEST);
 	}
+
 	@ExceptionHandler(EmptyResultDataAccessException.class)
-	public ResponseEntity<String> handleEmptyResultDataAccessException(EmptyResultDataAccessException elementException)
-	{
-		return new  ResponseEntity<String>("No such value is present in DB, Please change your request",HttpStatus.BAD_REQUEST);
+	public ResponseEntity<String> handleEmptyResultDataAccessException(
+			EmptyResultDataAccessException elementException) {
+		return new ResponseEntity<String>("No such value is present in DB, Please change your request",
+				HttpStatus.BAD_REQUEST);
 	}
+
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		// TODO Auto-generated method stub
-		return new  ResponseEntity<Object>("Please change the Http method type",HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Object>("Please change the Http method type", HttpStatus.NOT_FOUND);
 	}
+
 	@ExceptionHandler(EmptyInputException.class)
-	public ResponseEntity<String> handleEmptyInputException(EmptyInputException elementException)
-	{
-		return new  ResponseEntity<String>("Input field is empty, Please look into it",HttpStatus.BAD_REQUEST);
+	public ResponseEntity<String> handleEmptyInputException(EmptyInputException elementException) {
+		return new ResponseEntity<String>("Input field is empty, Please look into it", HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@ExceptionHandler(InvalidInputException.class)
-	public ResponseEntity<String> handleInvalidInputException(InvalidInputException elementException)
-	{
-		return new  ResponseEntity<String>("Entered zero or negative value in either age or phonenumber",HttpStatus.BAD_REQUEST);
+	public ResponseEntity<String> handleInvalidInputException(InvalidInputException elementException) {
+		return new ResponseEntity<String>("Entered zero or negative value in either age or phonenumber",
+				HttpStatus.BAD_REQUEST);
 	}
+
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException elementException)
 	{
 		return new  ResponseEntity<String>("Invalid Date",HttpStatus.BAD_REQUEST);
 	}
-
+	@ExceptionHandler(AuthenticationFailureException.class)
+	public ResponseEntity<String> handleAuthenticationFailureException(AuthenticationFailureException elementException)
+	{
+		return new  ResponseEntity<String>("Password is incorrect",HttpStatus.BAD_REQUEST);
+	}
+	@ExceptionHandler(NoUserFoundException.class)
+	public ResponseEntity<String> handleNoUserFoundException(NoUserFoundException elementException)
+	{
+		return new  ResponseEntity<String>("User with provided username does not exist,Please register",HttpStatus.BAD_REQUEST);
+	}
+	
 }

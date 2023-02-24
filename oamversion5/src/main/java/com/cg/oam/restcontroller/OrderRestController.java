@@ -26,8 +26,7 @@ public class OrderRestController {
 	//Add order
     @PostMapping("/addorder")
     public ResponseEntity<OrderDetailsBean> placeOrderByMedicineIdAndCustomerId(@RequestBody OrderDetails orderDetails){
-    	OrderDetails addedOrder = orderService.addOrder(orderDetails);
-    	OrderDetailsBean bean = new OrderDetailsBean(addedOrder,true);
+    	OrderDetailsBean bean = orderService.addOrder(orderDetails);
  	    return ResponseEntity.ok(bean);
     }
 	
