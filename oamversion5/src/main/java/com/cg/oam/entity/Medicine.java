@@ -58,7 +58,8 @@ public class Medicine {
 	private Integer stock;
 
 	@Lob
-	private Byte[] medicineImage;
+	private String image;
+	
 	@Column(name = "rating")
 	private Integer rating;
 

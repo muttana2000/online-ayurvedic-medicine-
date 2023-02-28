@@ -17,6 +17,7 @@ public class MedicineBean {
 	private float medicineCost;
 	private String companyName;
 	private LocalDate manufactureDate;
+	private String image;
 	private LocalDate expiryDate;
 	private Integer stock;
 	private Integer rating;
@@ -33,6 +34,7 @@ public class MedicineBean {
 		expiryDate=medicine.getExpiryDate();
 		stock=medicine.getStock();
 		rating=medicine.getRating();
+		image = medicine.getImage();
 		if(buildCategory) {
 			
 			description = new DescriptionBean(medicine.getDescription(),false);

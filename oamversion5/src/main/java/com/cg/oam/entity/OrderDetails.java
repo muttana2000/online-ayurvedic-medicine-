@@ -52,7 +52,7 @@ public class OrderDetails {
 	
 	//unidirectional
 	@OneToOne
-	@JoinColumn(name="fk_medicine_id")
+	@JoinColumn(name="medicine_id")
 	private Medicine medicine;
 	
 	

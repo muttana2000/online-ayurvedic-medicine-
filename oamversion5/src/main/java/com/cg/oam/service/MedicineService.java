@@ -1,13 +1,17 @@
 package com.cg.oam.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cg.oam.bean.MedicineBean;
+import com.cg.oam.entity.Category;
 import com.cg.oam.entity.Medicine;
 import com.cg.oam.exception.EmptyInputException;
 import com.cg.oam.exception.EmptyResultDataAccessException;
@@ -38,7 +42,68 @@ public class MedicineService {
 	// method to create Medicine product
 	// Admin can add and create medicine
 	@Transactional
-	public Medicine createMedicine(Medicine medicine) {
+	public MedicineBean createMedicine(Medicine medicine) {
+		if (medicine.getMedicineName() == null || medicine.getMedicineName().length() == 0
+				|| medicine.getCompanyName() == null || medicine.getCompanyName().length() == 0) {
+			throw new EmptyInputException();
+		}
+		if (medicine.getStock() == 0 || medicine.getStock() < 0 || medicine.getRating() == 0
+				|| medicine.getRating() < 0) {
+			throw new InvalidInputException();
+		}
+//		if (medicine.getManufactureDate().getYear() < 1 || medicine.getManufactureDate().getMonthValue() < 1
+//				|| medicine.getManufactureDate().getMonthValue() > 12
+//				|| medicine.getManufactureDate().getDayOfMonth() < 1
+//				|| medicine.getManufactureDate().getDayOfMonth() > 31) {
+//			throw new IllegalArgumentException("Invalid date");
+//		}
+		//upload image
+//		String fileName = org.springframework.util.StringUtils.cleanPath(file.getOriginalFilename());
+//		if(fileName.contains("..")) {
+//			System.out.println("not a valid file");
+//		}
+//		try {
+//			medicine.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		medicineRepository.save(medicine);
+		Optional<Category> optionalCategory =categoryRepository.findById(medicine.getCategory().getCategoryId());
+		if(optionalCategory.isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		medicine.setCategory(optionalCategory.get());
+        descriptionRepository.save(medicine.getDescription());
+        //categoryRepository.save(medicine.getCategory());
+        MedicineBean medicineBean = new MedicineBean(medicine,true,true);
+		 medicineRepository.save(medicine);
+		 return medicineBean;
+	}
+	//upload image
+	@Transactional
+	public void uploadMedicineImage(MultipartFile file, Integer medicineId) {
+		Optional<Medicine> optionalMedicine = medicineRepository.findById(medicineId);
+		if(optionalMedicine.isEmpty()) {
+			throw new NoSuchElementException();
+			}
+		String fileName = org.springframework.util.StringUtils.cleanPath(file.getOriginalFilename());
+		if(fileName.contains("..")) {
+			System.out.println("not a valid file");
+		}
+		Medicine medicine = optionalMedicine.get();
+		try {
+			medicine.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		medicineRepository.save(medicine);
+	}
+
+	// method to update medicine details
+	@Transactional
+	public MedicineBean updateMedicine(Medicine medicine) {
 		if (medicine.getMedicineName() == null || medicine.getMedicineName().length() == 0
 				|| medicine.getCompanyName() == null || medicine.getCompanyName().length() == 0) {
 			throw new EmptyInputException();
@@ -55,14 +120,9 @@ public class MedicineService {
 //		}
         descriptionRepository.save(medicine.getDescription());
         categoryRepository.save(medicine.getCategory());
-		return medicineRepository.save(medicine);
-	}
-
-	// method to update medicine details
-	@Transactional
-	public Medicine updateMedicine(MedicineBean medicine) {
-		Medicine med = new Medicine(medicine);
-		return medicineRepository.save(med);
+        MedicineBean medicineBean = new MedicineBean(medicine,true,true);
+		 medicineRepository.save(medicine);
+		return medicineBean;
 	}
 
 	// method to delete medicine by admin if medicine has new version

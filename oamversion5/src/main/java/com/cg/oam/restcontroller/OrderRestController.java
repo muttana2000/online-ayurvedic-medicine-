@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,7 @@ import com.cg.oam.bean.OrderDetailsBean;
 import com.cg.oam.entity.OrderDetails;
 import com.cg.oam.service.OrderService;
 
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 @RequestMapping("/orders")
 public class OrderRestController {
@@ -42,7 +45,17 @@ public class OrderRestController {
 		List<OrderDetailsBean> orders = orderService.getAllOrders();
 		return ResponseEntity.ok(orders);
 	}
+	@GetMapping("/order/{orderId}")
+	public ResponseEntity<OrderDetailsBean> getOrderByOrderId(@PathVariable Integer orderId){
+		OrderDetailsBean orderDetailsBean = orderService.getOrderByOrderId(orderId);
+		return ResponseEntity.ok(orderDetailsBean);
+	}
 	
+	@PutMapping("/order/update")
+	public ResponseEntity<OrderDetailsBean> updateOrder(@RequestBody OrderDetails orderDetails){
+	OrderDetailsBean bean =	orderService.updateOrder(orderDetails);
+		return ResponseEntity.ok(bean);
+	}
 	
 	
 	
