@@ -41,14 +41,9 @@ public class OrderDetailsBean {
   orderDate=orderDetails.getOrderDate();
   delieveryDate=orderDetails.getDelieveryDate();
   totalCost=orderDetails.getTotalCost(); 
-<<<<<<< HEAD
-  medicine = orderDetails.getMedicine(); 
-  if(value) { 
-=======
   
   if(value) { 
 	  medicine = new MedicineBean(orderDetails.getMedicine(),false,false);
->>>>>>> altran
 	  customer = new CustomerBean(orderDetails.getCustomer(),false); 
   prescription = new PrescriptionBean(orderDetails.getPrescription(),false,false); } }
 

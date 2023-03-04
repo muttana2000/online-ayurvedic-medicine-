@@ -57,6 +57,12 @@ public class OrderRestController {
 		return ResponseEntity.ok(bean);
 	}
 	
+	@GetMapping("/{status}")
+	public ResponseEntity<List<OrderDetailsBean>> getOrdersByStatus(@PathVariable String status){
+		List<OrderDetailsBean> ordersBean = orderService.getAllOrderByStatus(status);
+		return ResponseEntity.ok(ordersBean);
+	}
+	
 	
 	
 	

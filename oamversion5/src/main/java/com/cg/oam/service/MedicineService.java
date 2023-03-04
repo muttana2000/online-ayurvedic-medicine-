@@ -152,7 +152,7 @@ public class MedicineService {
 	 medicines= medicineRepository.findAll();
 	  
 	  List<MedicineBean> beanMedList = new ArrayList<>();
-	  medicines.stream().forEach(med->beanMedList.add(new MedicineBean(med,true,false)));
+	  medicines.stream().forEach(med->beanMedList.add(new MedicineBean(med,false,true)));
 	  if(beanMedList.isEmpty()) { throw new
 	  EmptyResultDataAccessException(); }
 	  return beanMedList; 
@@ -173,12 +173,17 @@ public class MedicineService {
 
 	// method to find medicine by its category public
 	public List<MedicineBean> findByMedicineCategory(String medicineCategory) {
-		List<Medicine> medList = medicineRepository.findAllMedicinesByCategory(medicineCategory);
+		Optional<Category> optionalCategory = categoryRepository.findByCategoryName(medicineCategory);
+		if(optionalCategory.isEmpty()){
+			throw new NoSuchElementException("303","category Not found");
+		}
+		Category category = optionalCategory.get();
+		List<Medicine> medList = category.getMedicines();
 		if (medList.isEmpty()) {
 			throw new EmptyResultDataAccessException();
 		}
 		List<MedicineBean> medBeanList = new ArrayList<>();
-		medList.stream().forEach(med -> MedicineHelper.generateMedicineBean(med));
+		medList.stream().forEach(medicine-> medBeanList.add(new MedicineBean(medicine,true,false)));
 		return medBeanList;
 	} // method to find all medicines its company name
 

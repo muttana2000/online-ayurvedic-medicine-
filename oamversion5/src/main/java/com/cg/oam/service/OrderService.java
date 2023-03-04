@@ -147,5 +147,17 @@ public class OrderService {
 		OrderDetailsBean bean = new OrderDetailsBean(orderDetails, false);
 		return bean;
 	}
+	@Transactional 
+	public List<OrderDetailsBean> getAllOrderByStatus(String status){
+		List<OrderDetails> ordersList = orderRepository.findByStatus(status);
+		if(ordersList.isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		List<OrderDetailsBean> orders = new ArrayList<>();
+		ordersList.stream().forEach(order -> {
+			orders.add(new OrderDetailsBean(order, false));
+		});
+		return orders;
+	}
 
 }

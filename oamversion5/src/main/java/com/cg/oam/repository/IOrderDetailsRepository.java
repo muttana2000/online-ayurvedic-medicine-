@@ -13,6 +13,8 @@ public interface IOrderDetailsRepository extends JpaRepository<OrderDetails,Inte
 	//method to find orderDetails By its Id
 	@Query("SELECT o from OrderDetails o where o.orderId=?1")
 	public OrderDetails findByOrderDetailsId(Integer OrderId);
+	
+	public List<OrderDetails> findByStatus(String status);
 
 	public List<OrderDetails> findByCustomerUserId(Integer userId);
 }
