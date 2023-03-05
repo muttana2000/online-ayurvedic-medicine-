@@ -80,6 +80,11 @@ public class MedicineService {
 		 medicineRepository.save(medicine);
 		 return medicineBean;
 	}
+//	@Transactional
+//	public MedicineBean updateMedicine(Medicine medicine) {
+//		medicineRepository.save(medicine);
+//		return new MedicineBean(medicine, true,true);
+//	}
 	//upload image
 	@Transactional
 	public void uploadMedicineImage(MultipartFile file, Integer medicineId) {
@@ -137,11 +142,16 @@ public class MedicineService {
 //				|| medicine.getManufactureDate().getDayOfMonth() > 31) {
 //			throw new IllegalArgumentException("Invalid date");
 //		}
+		Optional<Category> optionalCategory =categoryRepository.findById(medicine.getCategory().getCategoryId());
+		if(optionalCategory.isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		medicine.setCategory(optionalCategory.get());
         descriptionRepository.save(medicine.getDescription());
-        categoryRepository.save(medicine.getCategory());
+        //categoryRepository.save(medicine.getCategory());
         MedicineBean medicineBean = new MedicineBean(medicine,true,true);
 		 medicineRepository.save(medicine);
-		return medicineBean;
+		 return medicineBean;
 	}
 
 	// method to delete medicine by admin if medicine has new version
