@@ -17,7 +17,7 @@ public class PrescriptionBean {
 	private LocalDate uploadDate;
 	private LocalDate validationDate;
 	@Lob
-	private byte[] prescriptionImage;
+	private String image;
 	
 	private CustomerBean customerBean;
 	
@@ -27,7 +27,7 @@ public class PrescriptionBean {
 		prescriptionId=prescription.getPrescriptionId();
 		uploadDate=prescription.getUploadDate();
 		validationDate=prescription.getValidationDate();
-		prescriptionImage=prescription.getPrescriptionImage();
+		image=prescription.getImage();
 		if(buildOrderDetails) {
 			
 		}

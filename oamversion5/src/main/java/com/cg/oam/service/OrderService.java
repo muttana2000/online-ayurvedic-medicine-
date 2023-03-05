@@ -144,7 +144,7 @@ public class OrderService {
 		List<OrderDetails> orders = optionalCustomer.get().getOrders();
 		orders.add(orderDetails);
 		orderRepository.save(orderDetails);
-		OrderDetailsBean bean = new OrderDetailsBean(orderDetails, false);
+		OrderDetailsBean bean = new OrderDetailsBean(orderDetails,true);
 		return bean;
 	}
 	@Transactional 
@@ -155,7 +155,7 @@ public class OrderService {
 		}
 		List<OrderDetailsBean> orders = new ArrayList<>();
 		ordersList.stream().forEach(order -> {
-			orders.add(new OrderDetailsBean(order, false));
+			orders.add(new OrderDetailsBean(order, true));
 		});
 		return orders;
 	}

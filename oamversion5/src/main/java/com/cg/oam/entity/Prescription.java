@@ -29,7 +29,7 @@ public class Prescription {
 		prescriptionId=prescription.getPrescriptionId();
 		uploadDate=prescription.getUploadDate();
 		validationDate=prescription.getValidationDate();
-		prescriptionImage=prescription.getPrescriptionImage();
+		image=prescription.getImage();
 				
 	}
 	@Id
@@ -45,7 +45,7 @@ public class Prescription {
 	
 	//storing large size images
 	@Lob
-	private byte[] prescriptionImage;
+    private String image;
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id")

@@ -42,9 +42,14 @@ public class MedicineRestController {
 		medicineService.createMedicine(medicine);
 		return ResponseEntity.ok("Medicine Saved");
 	}
-	@PostMapping("/uploadImage/{medicineId}")
+	@PostMapping("/uploadImage/image/{medicineId}")
 	public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file,@PathVariable Integer medicineId){
 		medicineService.uploadMedicineImage(file, medicineId);
+		return ResponseEntity.ok("image uploaded successfully");
+	}
+	@PutMapping("/uploadImage/image/update/{medicineId}")
+	public ResponseEntity<String> uploadUpdateImage(@RequestParam("file") MultipartFile file,@PathVariable Integer medicineId){
+		medicineService.uploadUpdatedMedicineImage(file, medicineId);
 		return ResponseEntity.ok("image uploaded successfully");
 	}
 	

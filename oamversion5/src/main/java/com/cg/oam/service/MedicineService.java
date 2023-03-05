@@ -100,6 +100,25 @@ public class MedicineService {
 		}
 		medicineRepository.save(medicine);
 	}
+	@Transactional
+	public void uploadUpdatedMedicineImage(MultipartFile file, Integer medicineId) {
+		Optional<Medicine> optionalMedicine = medicineRepository.findById(medicineId);
+		if(optionalMedicine.isEmpty()) {
+			throw new NoSuchElementException();
+			}
+		String fileName = org.springframework.util.StringUtils.cleanPath(file.getOriginalFilename());
+		if(fileName.contains("..")) {
+			System.out.println("not a valid file");
+		}
+		Medicine medicine = optionalMedicine.get();
+		try {
+			medicine.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		medicineRepository.save(medicine);
+	}
 
 	// method to update medicine details
 	@Transactional
